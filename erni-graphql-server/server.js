@@ -4,15 +4,31 @@ const { buildSchema } = require('graphql');
 const expressGraphQL = require('express-graphql');
 const schema = require('./graphql/schema.js');
 const resolvers = require('./graphql/resolvers.js');
+const r = require('rethinkdb');
 
 const port = 3000;
-const app = connect();
-const builtSchema = buildSchema(schema);
+const dbParams = { host: 'localhost', port: 28015 };
+const handleError = res => error => {
+  res.send(500, { error: error.message });
+  console.error(error.stack);
+};
+const createDbConnection = (req, res, next) => {
+  r.connect(dbParams)
+    .then(connection => {
+      req.dbConnection = connection;
+      next();
+    })
+    .error(handleError(res));
+};
 
+const app = connect();
+
+app.use(createDbConnection);
 app.use(expressGraphQL({
-  schema: builtSchema,
+  schema: buildSchema(schema),
   rootValue: resolvers,
   graphiql: true,
+  pretty: true,
 }));
 
 http.createServer(app).listen(port);

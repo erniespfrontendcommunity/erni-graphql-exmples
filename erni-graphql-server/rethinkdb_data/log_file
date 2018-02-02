@@ -1,0 +1,26 @@
+2018-02-02T11:36:36.328911000 0.173743s notice: Recursively removing directory /Users/konstantin/Projects/erni-graphql-examples/erni-graphql-server/rethinkdb_data/tmp
+2018-02-02T11:36:36.331164000 0.176001s notice: Initializing directory /Users/konstantin/Projects/erni-graphql-examples/erni-graphql-server/rethinkdb_data
+2018-02-02T11:36:36.331335000 0.176167s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/konstantin/Projects/erni-graphql-examples/erni-graphql-server/rethinkdb_data' did not already exist or is empty.)
+2018-02-02T11:36:36.331411000 0.176243s notice: Running rethinkdb 2.3.6 (CLANG 9.0.0 (clang-900.0.37))...
+2018-02-02T11:36:36.341876000 0.186708s notice: Running on Darwin 17.3.0 x86_64
+2018-02-02T11:36:36.341973000 0.186804s notice: Loading data from directory /Users/konstantin/Projects/erni-graphql-examples/erni-graphql-server/rethinkdb_data
+2018-02-02T11:36:36.461731000 0.306558s info: Automatically using cache size of 100 MB
+2018-02-02T11:36:36.461751000 0.306578s warn: Cache size does not leave much memory for server and query overhead (available memory: 854 MB).
+2018-02-02T11:36:36.461762000 0.306589s warn: Cache size is very low and may impact performance.
+2018-02-02T11:36:36.462756000 0.307583s notice: Listening for intracluster connections on port 29015
+2018-02-02T11:36:36.464347000 0.309174s notice: Listening for client driver connections on port 28015
+2018-02-02T11:36:36.464462000 0.309289s notice: Listening for administrative HTTP connections on port 8080
+2018-02-02T11:36:36.464464000 0.309291s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2018-02-02T11:36:36.464472000 0.309299s notice: Listening on driver addresses: 127.0.0.1, ::1
+2018-02-02T11:36:36.464474000 0.309301s notice: Listening on http addresses: 127.0.0.1, ::1
+2018-02-02T11:36:36.464479000 0.309306s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2018-02-02T11:36:36.464485000 0.309312s notice: Server ready, "Konstantins_MacBook_Pro_local_ozn" 68f9e6e5-9667-4aed-82cb-ba6bf3d95cc0
+2018-02-02T14:01:24.541998000 8302.003177s info: Table 5cdf7b6b-264f-484a-a896-2cee0a958936: Starting a new Raft election for term 1.
+2018-02-02T14:01:24.544019000 8302.005199s info: Table 5cdf7b6b-264f-484a-a896-2cee0a958936: Added replica on this server.
+2018-02-02T14:01:24.567994000 8302.029172s info: Table 5cdf7b6b-264f-484a-a896-2cee0a958936: This server is Raft leader for term 1. Latest log index is 0.
+2018-02-02T18:26:36.222092000 19725.394994s info: Table 0a9ab471-c000-40e2-8746-562914c14eb6: Starting a new Raft election for term 1.
+2018-02-02T18:26:36.222279000 19725.395181s info: Table 0a9ab471-c000-40e2-8746-562914c14eb6: Added replica on this server.
+2018-02-02T18:26:36.243540000 19725.416444s info: Table 0a9ab471-c000-40e2-8746-562914c14eb6: This server is Raft leader for term 1. Latest log index is 0.
+2018-02-02T18:27:03.564354000 19752.736436s info: Table 4c538314-5df2-4529-983b-a75d52fedc9a: Starting a new Raft election for term 1.
+2018-02-02T18:27:03.564567000 19752.736648s info: Table 4c538314-5df2-4529-983b-a75d52fedc9a: Added replica on this server.
+2018-02-02T18:27:03.584411000 19752.756492s info: Table 4c538314-5df2-4529-983b-a75d52fedc9a: This server is Raft leader for term 1. Latest log index is 0.

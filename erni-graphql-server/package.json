@@ -4,14 +4,16 @@
   "description": "Erni twitter clone server",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "start-db": "rethinkdb"
   },
   "author": "Konstantin Kalbazov",
   "license": "MIT",
   "dependencies": {
     "connect": "^3.6.5",
     "express-graphql": "^0.6.11",
-    "graphql": "^0.12.3"
+    "graphql": "^0.12.3",
+    "rethinkdb": "^2.3.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
