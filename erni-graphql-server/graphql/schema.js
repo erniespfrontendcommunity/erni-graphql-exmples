@@ -6,13 +6,14 @@ const typeDefs = `
 type User {
   id: String!
   name: String!
+  avatarUrl: String
   posts: [Post]
 }
 
 type Post {
   id: String!
   body: String!
-  userId: String!
+  user: User
 }
 
 type Like {
@@ -24,8 +25,8 @@ type Like {
 type Query {
   users: [User]
   posts: [Post]
-  getUser(id: String): User
-  getPost(id: String): Post
+  getUser(id: String!): User
+  getPost(id: String!): Post
 }
 
 type Mutation {

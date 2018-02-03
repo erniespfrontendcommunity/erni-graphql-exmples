@@ -1,8 +1,7 @@
 {
-  "name": "erni-twitter-clone-server",
-  "version": "1.0.0",
-  "description": "Erni twitter clone server",
-  "main": "server.js",
+  "name": "erni-graphql-server",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
     "start": "nodemon server.js",
     "start-db": "rethinkdb"
@@ -11,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "graphql": "^0.12.3",
     "graphql-server-express": "^1.3.2",

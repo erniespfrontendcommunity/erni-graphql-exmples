@@ -9,27 +9,36 @@ module.exports = {
   Query: {
 
     async users(obj, args, context, info) {
-      console.log(obj, args, context, info);
-
       const users = await r.table('users').run(context.dbConnection);
+
       return users.toArray();
     },
 
     async posts(root, args, context) {
-      const posts = await r.table('posts').run(context.dbConnection);
+      let posts = await r.table('posts')
+        .merge(post => ({
+          user: r.table('users').get(post('userId'))
+        }))
+        .run(context.dbConnection);
+
       return posts.toArray();
     },
 
     async getUser(root, args, context) {
       const user = await r.table('users')
-        .get(root, args.id)
+        .get(args.id)
         .run(context.dbConnection);
-      return user;
+
+      const posts = await r.table('posts')
+        .filter({ userId: args.id })
+        .run(context.dbConnection);
+
+        return { ...user, posts: posts.toArray() };
     },
 
     async getPost(root, args, context) {
       const post = await r.table('posts')
-        .get(root, args.id)
+        .get(args.id)
         .run(context.dbConnection);
       return post;
     },
@@ -69,7 +78,7 @@ module.exports = {
 
     async deleteUser(root, args, context) {
       const result = await r.table('users')
-        .get(root, args.id)
+        .get(args.id)
         .delete({
           returnChanges: true,
         })
@@ -80,7 +89,7 @@ module.exports = {
 
     async deletePost(root, args, context) {
       const result = await r.table('posts')
-        .get(root, args.id)
+        .get(args.id)
         .delete({
           returnChanges: true,
         })

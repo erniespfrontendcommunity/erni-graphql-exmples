@@ -2,6 +2,7 @@
 const bodyParser = require('body-parser');
 const { createServer } = require('http');
 const express = require('express');
+const cors = require('cors');
 // Database
 const r = require('rethinkdb');
 // GraphQL
@@ -10,7 +11,7 @@ const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
 const schema = require('./graphql/schema');
 
-const port = 3000;
+const port = 7777;
 const dbParams = { host: 'localhost', port: 28015 };
 const handleError = res => error => {
   res.send(500, { error: error.message });
@@ -26,6 +27,8 @@ const createDbConnection = (req, res, next) => {
 };
 
 const app = express();
+
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use(createDbConnection);
 

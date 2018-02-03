@@ -24,3 +24,4 @@
 2018-02-02T18:27:03.564354000 19752.736436s info: Table 4c538314-5df2-4529-983b-a75d52fedc9a: Starting a new Raft election for term 1.
 2018-02-02T18:27:03.564567000 19752.736648s info: Table 4c538314-5df2-4529-983b-a75d52fedc9a: Added replica on this server.
 2018-02-02T18:27:03.584411000 19752.756492s info: Table 4c538314-5df2-4529-983b-a75d52fedc9a: This server is Raft leader for term 1. Latest log index is 0.
+2018-02-04T18:29:10.895988000 106458.051989s info: Table 0a9ab471-c000-40e2-8746-562914c14eb6: Configuration is changing.
