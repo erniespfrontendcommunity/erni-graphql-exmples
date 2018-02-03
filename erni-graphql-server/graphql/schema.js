@@ -1,4 +1,7 @@
-module.exports = `
+const { makeExecutableSchema } = require('graphql-tools');
+const resolvers = require('./resolvers.js');
+
+const typeDefs = `
 
 type User {
   id: String!
@@ -34,7 +37,15 @@ type Mutation {
 }
 
 type Subscription {
-  createPost(title: String!): String
+  postAdded: Post
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
 }
 
 `;
+
+module.exports = makeExecutableSchema({ typeDefs, resolvers });

@@ -2,6 +2,7 @@
   "extends": "airbnb-base",
   "rules": {
     "no-console": 0,
+    "no-new": 0,
     "arrow-body-style": ["error", "as-needed"],
     "arrow-parens": ["error", "as-needed"]
   }

@@ -1,10 +1,14 @@
-const connect = require('connect');
-const http = require('http');
-const { buildSchema } = require('graphql');
-const expressGraphQL = require('express-graphql');
-const schema = require('./graphql/schema.js');
-const resolvers = require('./graphql/resolvers.js');
+// Server
+const bodyParser = require('body-parser');
+const { createServer } = require('http');
+const express = require('express');
+// Database
 const r = require('rethinkdb');
+// GraphQL
+const { execute, subscribe } = require('graphql');
+const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
+const schema = require('./graphql/schema');
 
 const port = 3000;
 const dbParams = { host: 'localhost', port: 28015 };
@@ -21,16 +25,32 @@ const createDbConnection = (req, res, next) => {
     .error(handleError(res));
 };
 
-const app = connect();
+const app = express();
 
 app.use(createDbConnection);
-app.use(expressGraphQL({
-  schema: buildSchema(schema),
-  rootValue: resolvers,
-  graphiql: true,
-  pretty: true,
+
+app.use('/graphql', bodyParser.json(), graphqlExpress(req => ({
+  schema,
+  context: req,
+})));
+
+app.get('/graphiql', graphiqlExpress({
+  endpointURL: '/graphql',
+  subscriptionsEndpoint: `ws://localhost:${port}/subscriptions`,
 }));
 
-http.createServer(app).listen(port);
+const server = createServer(app);
 
-console.log(`GraphQL API server running at localhost: ${port}`);
+server.listen(port, () => {
+  console.log(`GraphQL API server running at localhost: ${port}`);
+
+  // Set up the WebSocket for handling GraphQL subscriptions.
+  new SubscriptionServer({
+    execute,
+    subscribe,
+    schema,
+  }, {
+    server,
+    path: '/subscriptions',
+  });
+});
