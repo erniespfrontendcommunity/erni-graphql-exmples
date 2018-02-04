@@ -1,7 +1,5 @@
 import React from 'react';
 import List, { ListItem, ListItemText } from 'material-ui/List';
-import { Link } from 'react-router-dom';
-import Avatar from 'material-ui/Avatar';
 import PageTitle from '../PageTitle';
 import LoadingIndicator from '../LoadingIndicator';
 import { graphql } from 'react-apollo';
@@ -21,7 +19,7 @@ const UserDetails = (props) => {
     if (user.posts && user.posts.length > 0) {
         posts = <List>
           {user.posts.map(post => (
-            <ListItem button key={post.id} component={Link} to={`/posts/${post.id}`}>
+            <ListItem button key={post.id}>
               <ListItemText primary={post.body} />
             </ListItem>
           ))}
