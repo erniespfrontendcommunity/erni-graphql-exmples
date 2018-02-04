@@ -7,7 +7,8 @@ const styles = (theme) => ({
     margin: 0,
     padding: '15px',
     color: '#333',
-    fontSize: 28
+    fontSize: 28,
+    position: 'relative',
   },
   textFieldRoot: {
     padding: 0,

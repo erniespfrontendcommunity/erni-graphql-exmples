@@ -9,6 +9,7 @@ import MainMenu from '../MainMenu';
 import Posts from '../Posts';
 import Users from '../Users';
 import Feed from '../Feed';
+import NewPost from '../Feed';
 import UserDetails from '../UserDetails';
 import './App.css';
 
@@ -36,6 +37,7 @@ const App = (props) => (
               <Route exact path="/" component={Posts} />
               <Route exact path="/users" component={Users} />
               <Route exact path="/users/:id" component={UserDetails} />
+              <Route exact path="/users/:id/posts/new" component={NewPost} />
               <Route exact path="/feed" component={Feed} />
               <Redirect to="/" />
             </Switch>
