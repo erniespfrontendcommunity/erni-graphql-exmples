@@ -22,11 +22,19 @@ type Like {
   postId: String!
 }
 
+type Tweet {
+  id: String,
+  text: String
+  authorName: String
+  authorAvatarUrl: String
+}
+
 type Query {
   users: [User]
   posts: [Post]
   getUser(id: String!): User
   getPost(id: String!): Post
+  getFeed: [Tweet]
 }
 
 type Mutation {

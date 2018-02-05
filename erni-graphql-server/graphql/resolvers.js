@@ -1,4 +1,5 @@
 const r = require('rethinkdb');
+var Twitter = require('twitter');
 const { PubSub } = require('graphql-subscriptions');
 
 const pubSub = new PubSub();
@@ -45,6 +46,33 @@ module.exports = {
         .get(args.id)
         .run(context.dbConnection);
       return post;
+    },
+
+    async getFeed(root, args, context) {
+
+      const twtr = new Twitter({
+        consumer_key: 'VqIzKByz38VDwCSqQ9T2I71To',
+        consumer_secret: 'sttSiAbQwDy2W6chIjzPp91plIDXuKVqAa7FHihpa1wNXzBbJR',
+        access_token_key: '115462445-lhJNetLQnWidkxismNTVFhljcTLmk7yJfY95X82L',
+        access_token_secret: 'JObiRMYeThHRiX6Fumbgm7JQi5QhsgHLva5P87s7UgVkC'
+      });
+
+      const params = {
+        q: '#GraphQL',
+        count: 10,
+        result_type: 'recent',
+        lang: 'en'
+      };
+
+      const data = await twtr.get('search/tweets', params);
+
+      const tweets = data.statuses.map(t => ({
+        ...t,
+        authorName: t.user.name,
+        authorAvatarUrl: t.user.profile_image_url,
+      }));
+
+      return tweets;
     },
 
   },

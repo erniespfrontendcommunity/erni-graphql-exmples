@@ -8,7 +8,6 @@ import ControlPointIcon from 'material-ui-icons/ControlPoint';
 // import DeleteIcon from 'material-ui-icons/Delete';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
-import Divider from 'material-ui/Divider';
 import Dialog, {
   DialogActions,
   DialogContent,
