@@ -5,7 +5,6 @@ import PageTitle from '../PageTitle';
 import LoadingIndicator from '../LoadingIndicator';
 import IconButton from 'material-ui/IconButton';
 import ControlPointIcon from 'material-ui-icons/ControlPoint';
-// import DeleteIcon from 'material-ui-icons/Delete';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Dialog, {
@@ -30,6 +29,7 @@ class UserDetails extends React.Component {
 
   state = {
     open: false,
+    newPostTextFieldValue: '',
   };
 
   handleClickOpen = () => {
@@ -38,6 +38,25 @@ class UserDetails extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+  };
+
+  submitPost = () => {
+    this.props.mutate({
+      variables: {
+        body: this.state.newPostTextFieldValue,
+        userId: this.props.data.getUser.id
+      }
+    })
+
+    .then(({ data }) => {
+      this.handleClose();
+      this.setState({ newPostTextFieldValue: '' });
+      this.props.data.refetch();
+    })
+
+    .catch((error) => {
+      console.log('there was an error sending the query', error);
+    });
   };
 
   render() {
@@ -89,6 +108,8 @@ class UserDetails extends React.Component {
             <br />
             <br />
             <TextField
+              value={this.state.newPostTextFieldValue}
+              onChange={e => this.setState({ newPostTextFieldValue: e.target.value })}
               autoFocus
               id="name"
               label="How do you feel today?"
@@ -100,7 +121,7 @@ class UserDetails extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.submitPost} color="primary">
               Save
             </Button>
           </DialogActions>
@@ -124,10 +145,34 @@ const userDetailsQuery = gql`
   }
 `;
 
-export default graphql(userDetailsQuery, {
+const withQuery = graphql(userDetailsQuery, {
   options: (props) => ({
     variables: {
       id: props.match.params.id
     }
   })
-})(withStyles(styles)(UserDetails));
+});
+
+const createPostMutation = gql`
+  mutation CreateUserPost($body: String!, $userId: String!) {
+    createPost(body: $body, userId: $userId) {
+      id
+      body
+      user {
+        id
+        name
+        avatarUrl
+      }
+    }
+  }
+`;
+
+const withMutation = graphql(createPostMutation, {
+  options: (props) => ({
+    variables: {
+      userId: props.match.params.id
+    }
+  })
+});
+
+export default withQuery(withMutation(withStyles(styles)(UserDetails)));

@@ -41,7 +41,7 @@ type Mutation {
   createUser(name: String!): User
   deleteUser(id: String!): User!
 
-  createPost(body: String!, userId: String!): Post
+  createPost(body: String!, userId: String!): Post!
   deletePost(id: String!): Post!
 }
 

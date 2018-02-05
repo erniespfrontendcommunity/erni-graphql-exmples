@@ -34,6 +34,7 @@ export default graphql(gql`
     users {
       id
       name
+      avatarUrl
     }
   }
 `)(Users);
