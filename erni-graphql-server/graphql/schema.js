@@ -24,6 +24,7 @@ type Like {
 
 type Tweet {
   id: String,
+  uuid: String,
   text: String
   authorName: String
   authorAvatarUrl: String
@@ -32,9 +33,9 @@ type Tweet {
 type Query {
   users: [User]
   posts: [Post]
+  tweets: [Tweet]
   getUser(id: String!): User
   getPost(id: String!): Post
-  getFeed: [Tweet]
 }
 
 type Mutation {
@@ -47,6 +48,7 @@ type Mutation {
 
 type Subscription {
   postAdded: Post
+  tweetAdded: Tweet
 }
 
 schema {

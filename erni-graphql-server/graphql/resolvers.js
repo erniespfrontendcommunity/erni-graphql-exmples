@@ -1,9 +1,11 @@
 const r = require('rethinkdb');
 var Twitter = require('twitter');
 const { PubSub } = require('graphql-subscriptions');
+const uuid = require('uuid');
 
 const pubSub = new PubSub();
 const POST_ADDED_TOPIC = 'postAdded';
+const TWEET_ADDED_TOPIC = 'postAdded';
 
 module.exports = {
 
@@ -48,7 +50,7 @@ module.exports = {
       return post;
     },
 
-    async getFeed(root, args, context) {
+    async tweets(root, args, context) {
 
       const twtr = new Twitter({
         consumer_key: 'VqIzKByz38VDwCSqQ9T2I71To',
@@ -58,7 +60,7 @@ module.exports = {
       });
 
       const params = {
-        q: '#GraphQL',
+        q: 'graphql',
         count: 10,
         result_type: 'recent',
         lang: 'en'
@@ -68,9 +70,21 @@ module.exports = {
 
       const tweets = data.statuses.map(t => ({
         ...t,
+        uuid: uuid.v4(),
         authorName: t.user.name,
         authorAvatarUrl: t.user.profile_image_url,
       }));
+
+      const stream = twtr.stream('statuses/filter', { track: 'graphql' });
+      stream.on('data', t => {
+        const tweet = {
+          ...t,
+          uuid: uuid.v4(),
+          authorName: t.user.name,
+          authorAvatarUrl: t.user.profile_image_url
+        };
+        pubSub.publish(TWEET_ADDED_TOPIC, { tweetAdded: tweet });
+      });
 
       return tweets;
     },
@@ -142,6 +156,10 @@ module.exports = {
 
     postAdded: {
       subscribe: () => pubSub.asyncIterator(POST_ADDED_TOPIC),
+    },
+
+    tweetAdded: {
+      subscribe: () => pubSub.asyncIterator(TWEET_ADDED_TOPIC),
     },
 
   },

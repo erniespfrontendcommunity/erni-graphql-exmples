@@ -19,7 +19,7 @@ export class Posts extends React.Component {
         document: POSTS_SUBSCRIPTION,
         updateQuery: (previousResult, { subscriptionData }) => {
 
-          if (!subscriptionData.data) {
+          if (!subscriptionData.data || !subscriptionData.data.postAdded) {
             return previousResult;
           }
 
@@ -83,6 +83,9 @@ const POSTS_SUBSCRIPTION = gql`
 `;
 
 const withData = graphql(POSTS_QUERY, {
+  // This is just a dirty hack to trigger componentWillReceiveProps()
+  // because when props.data changes this method is not trigered
+  // for sure, there is a better way to do this
   props: (props) => {
     const { data: { loading, currentUser, entry, subscribeToMore } } = props;
     return {
